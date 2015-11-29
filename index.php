@@ -39,8 +39,6 @@ $fwmon = new resources($_GET['table']);
 					<a href="./?table=nat" class="btn btn-default">NAT</a>
 					<a href="./?table=filter" class="btn btn-default">FILTER</a>
 					<a href="./?table=mangle" class="btn btn-default">MANGLE</a>
-				</div>
-				<div class="btn-group btn-group-justified">
 					<a href="./?table=connection" class="btn btn-default">CONN</a>
 					<a href="./?table=layer7-protocol" class="btn btn-default">L7-PROT</a>
 				</div>
