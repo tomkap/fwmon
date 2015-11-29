@@ -40,41 +40,8 @@ $API->disconnect();
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
 	<link rel="stylesheet" href="css/custom.min.css">
+	<link rel="stylesheet" href="css/main.css">
 </head>
-
-<style>
-	body {
-		width: 85%;
-		margin: 0 auto;
-		margin-bottom: 150px;
-	}
-	tr {
-		cursor: pointer;
-	}
-
-	.modal-body {
-		text-align: center;
-	}
-	.modal-footer {
-		text-align: center;
-	}
-	.modal-footer .btn-group {
-		margin-top: 30px;
-	}
-	.progress-header {
-		float: left;
-		width: 45%;
-		text-align: right;
-		margin-right: 15px;
-	}
-	.progress {
-		margin-top: 15px;
-	}
-	p b {
-		margin-right: 6px;
-	}
-</style>
-
 <body>
 	<div class="modal-dialog">
 		<div class="modal-content">
