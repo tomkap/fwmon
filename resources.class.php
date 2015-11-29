@@ -122,24 +122,24 @@ class resources
 		} else {
 			$this->t_head = '<tr>';
 			foreach ($this->struct[$table] as $call => $head) {
-				$this->t_head += $head;
+				$this->t_head .= $head;
 			}
-			$this->t_head += '</tr>';
+			$this->t_head .= '</tr>';
 
 			$results = $API->comm("/ip/firewall/$table/print");
 
 			foreach($results as $result) {
 				if ($table === 'nat' || $table === 'filter' || $table === 'mangle') {
-					$this->t_rows += '<tr title="" data-original-title="" type="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="';
-					$this->t_rows += $result['comment'] . '">';
+					$this->t_rows .= '<tr title="" data-original-title="" type="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="';
+					$this->t_rows .= $result['comment'] . '">';
 				} else {
-					$this->t_rows += '<tr>';
+					$this->t_rows .= '<tr>';
 				}
 
 				foreach ($this->struct[$table] as $call => $head)
-					$this->t_rows += '<td>' . $result[$call] . '</td>';
+					$this->t_rows .= '<td>' . $result[$call] . '</td>';
 
-				$this->t_rows += '</tr>';
+				$this->t_rows .= '</tr>';
 			}
 		}
 
