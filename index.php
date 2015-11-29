@@ -36,7 +36,7 @@ $API->disconnect();
 
 ?><!DOCTYPE html><html>
 <head>
-	<title>ros_fwmon</title>
+	<title>FWMon :: MikroTik Firewall Monitor (https://github.com/tomkap/fwmon/)</title>
 
 	<link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
 	<link rel="stylesheet" href="css/custom.min.css">
