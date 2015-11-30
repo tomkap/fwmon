@@ -1,7 +1,10 @@
 <?php
 require_once('fwmon.class.php');
 
-$fwmon = new fwmon($_GET['table']);
+$fwmon = new fwmon();
+
+$fwmon->buildHTMLResources();
+$fwmon->buildHTMLTable($_GET['table']);
 
 ?><!DOCTYPE html><html>
 <head>
@@ -19,21 +22,25 @@ $fwmon = new fwmon($_GET['table']);
 			</div>
 
 			<div class="modal-body">
+				<div id="modalBody">
 				<?php
 					echo $fwmon->info['platform'];
 					echo $fwmon->info['model'];
 					echo $fwmon->info['version'];
 					echo $fwmon->info['cpu'];
 				?>
+				</div>
 			</div>
 
 			<div class="modal-footer">
+				<div id="modalFooter">
 				<?php
 					echo $fwmon->info['uptime'];
 					echo $fwmon->info['cpu-load'];
 					echo $fwmon->info['memory-usage'];
 					echo $fwmon->info['hdd-usage'];
 				?>
+				</div>
 
 				<div class="btn-group btn-group-justified">
 					<?php
@@ -45,15 +52,13 @@ $fwmon = new fwmon($_GET['table']);
 		</div>
 	</div>
 
-	<table class="table table-striped table-hover">
+	<table data-table="<?php echo $_GET['table']; ?>" class="table table-striped table-hover">
 		<thead><?php echo $fwmon->t_head; ?></thead>
 		<tbody><?php echo $fwmon->t_rows; ?></tbody>
 	</table>
 
 	<script src="js/jquery-1.10.2.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script>
-		$('[data-toggle="popover"]').popover();
-	</script>
+	<script src="js/fwmon.js"></script>
 </body>
 </html>

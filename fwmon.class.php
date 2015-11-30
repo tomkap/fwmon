@@ -3,8 +3,14 @@ require_once('routeros_api.class.php');
 
 class fwmon
 {
+	/* JSON */
+	public $json    = '';
+
+	/* HTML resources */
 	public $info    = [];
-	public $rows    = '';
+
+	/* HTML table */
+	public $t_rows  = '';
 	public $t_head  = '';
 	public $t_links = [
 		'nat' => '<a href="./?table=nat" class="btn btn-default">NAT</a>',
@@ -13,6 +19,8 @@ class fwmon
 		'connection' => '<a href="./?table=connection" class="btn btn-default">CONN</a>',
 		'layer7-protocol' => '<a href="./?table=layer7-protocol" class="btn btn-default">L7-PROT</a>'
 	];
+
+	private $API;
 
 	/* table name => [API call => HTML table header] */
 	private $struct = [
@@ -79,17 +87,78 @@ class fwmon
 	];
 
 
-	public function fwmon($table) {
+	public function fwmon() {
 		$API = new routerosAPI();
 		$API->debug = false;
 
 		$config = json_decode(file_get_contents('./config.json'), true);
 
-		if (!$API->connect($config['hostname'], $config['username'], $config['password'])) {
+		if (!$this->API->connect($config['hostname'], $config['username'], $config['password']))
 			die('API connection failed, aborting...');
-		}
+	}
 
-		$resources = $API->comm("/system/resource/print")['0'];
+
+	public function buildJSONTable($table) {
+		if (!array_key_exists($table, $this->struct)) {
+			$this->json = json_encode(['Error' => 'Unknown table.']);
+		} else {
+			$output = [];
+
+			$this->buildHTMLTable($table);
+
+			$output['tHead'] = $this->t_head;
+			$output['tBody'] = $this->t_rows;
+
+			$this->json = json_encode($output);
+		}
+	}
+
+
+	public function buildHTMLTable($table) {
+		if (!array_key_exists($table, $this->struct)) {
+			$this->t_head = '<script>document.querySelector(\'table\').style.display = \'none\';</script>';
+		} else {
+			$this->t_links[$table] = str_replace('btn-default', 'btn-default active disabled', $this->t_links[$table]);
+
+			$this->t_head = '<tr>';
+			foreach ($this->struct[$table] as $call => $head) {
+				$this->t_head .= '<th>' . $head . '</th>';
+			}
+			$this->t_head .= '</tr>';
+
+			$results = $API->comm("/ip/firewall/$table/print");
+
+			foreach($results as $result) {
+				if ($table === 'nat' || $table === 'filter' || $table === 'mangle') {
+					$this->t_rows .= '<tr title="" data-original-title="" type="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="';
+					$this->t_rows .= $result['comment'] . '">';
+				} else {
+					$this->t_rows .= '<tr>';
+				}
+
+				foreach ($this->struct[$table] as $call => $head)
+					$this->t_rows .= '<td>' . $result[$call] . '</td>';
+
+				$this->t_rows .= '</tr>';
+			}
+		}
+	}
+
+
+	public function buildJSONResources() {
+		$output = [];
+
+		$this->buildHTMLResources();
+
+		$output['modalBody']   = $this->info['platform'] . $this->info['model'] . $this->info['version'] . $this->info['cpu'];
+		$output['modalFooter'] = $this->info['uptime'] . $this->info['cpu-load']. $this->info['memory-usage'] . $this->info['hdd-usage'];
+
+		$this->json = json_encode($output);
+	}
+
+
+	public function buildHTMLResources() {
+		$resources = $this->API->comm("/system/resource/print")['0'];
 
 		$this->info['platform'] = '<p><b>Platform:</b>' . $resources['platform'] . '</p>';
 		$this->info['model']    = '<p><b>Model:</b>' . $resources['board-name'] . '</p>';
@@ -123,37 +192,6 @@ class fwmon
 					<div class="progress-bar ' . $this->getProgressClass($hdd_perc, false) . '" style="width: ' . $hdd_perc . '%"></div>
 				</div>
 		';
-
-
-		if (!array_key_exists($table, $this->struct)) {
-			$this->t_head = '<script>document.querySelector(\'table\').style.display = \'none\';</script>';
-		} else {
-			$this->t_links[$table] = str_replace('btn-default', 'btn-default active disabled', $this->t_links[$table]);
-
-			$this->t_head = '<tr>';
-			foreach ($this->struct[$table] as $call => $head) {
-				$this->t_head .= '<th>' . $head . '</th>';
-			}
-			$this->t_head .= '</tr>';
-
-			$results = $API->comm("/ip/firewall/$table/print");
-
-			foreach($results as $result) {
-				if ($table === 'nat' || $table === 'filter' || $table === 'mangle') {
-					$this->t_rows .= '<tr title="" data-original-title="" type="button" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="';
-					$this->t_rows .= $result['comment'] . '">';
-				} else {
-					$this->t_rows .= '<tr>';
-				}
-
-				foreach ($this->struct[$table] as $call => $head)
-					$this->t_rows .= '<td>' . $result[$call] . '</td>';
-
-				$this->t_rows .= '</tr>';
-			}
-		}
-
-		$API->disconnect();
 	}
 
 
@@ -182,5 +220,9 @@ class fwmon
 		$bytes /= (1 << (10 * $pow)); 
 
 		return round($bytes, $precision) . ' ' . $units[$pow]; 
+	}
+
+	public function __destruct() {
+		$this->API->disconnect();
 	}
 }
