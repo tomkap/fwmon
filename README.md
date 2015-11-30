@@ -11,9 +11,14 @@
 Live demo: [here](https://pebkac.gr/fwmon/)
 
 ## Installation
+### Requirements
+* HTTP Server (Apache2, nginx)
+* PHP v5.x
+
+### Steps
 Clone it
 ```
-$ git clone https://github.com/tomkap/scripts.git
+$ git clone https://github.com/tomkap/fwmon.git
 ```
 
 Insert your MikroTik credentials and rename config file
