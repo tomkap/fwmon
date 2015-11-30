@@ -30,6 +30,7 @@ function refreshData() {
 			document.querySelector('thead').innerHTML = data.tHead;
 			document.querySelector('tbody').innerHTML = data.tBody;
 
+			$('[role="tooltip"]').remove(); // edge case - the user is hovering a row
 			$('[data-toggle="popover"]').popover();
 		});
 	}
