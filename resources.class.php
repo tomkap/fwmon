@@ -19,7 +19,9 @@ class resources
 			'out-interface' => '<th>OUT_INT</th>',
 			'src-port' => '<th>SRC_PORT</th>',
 			'dst-port' => '<th>DST_PORT</th>',
-			'bytes' => '<th>BTS</th>',
+			'to-addresses' => '<th>TO_ADDR</th>',
+			'to-ports' => '<th>TO_PORTS</th>',
+                        'bytes' => '<th>BTS</th>',
 			'packets' => '<th>PKTS</th>'
 		],
 
@@ -45,15 +47,11 @@ class resources
 			'passthrough' => '<th>PASSTHROUGH</th>',
 			'tcp-flags' => '<th>TCP_FLAGS</th>',
 			'protocol' => '<th>PROTO</th>',
-			'in-interface' => '<th>IN_INT</th>',
+                        'in-interface' => '<th>IN_INT</th>',
+                        'out-interface' => '<th>OUT_INT</th>',
 			'tcp-mss' => '<th>TCP_MSS</th>',
-			'log' => '<th>LOG</th>',
-			'log-prefix' => '<th>LOG_PREFIX</th>',
 			'bytes' => '<th>BTS</th>',
 			'packets' => '<th>PKTS</th>',
-			'invalid' => '<th>INVALID</th>',
-			'dynamic' => '<th>DYNAMIC</th>',
-			'disabled' => '<th>DISABLED</th>'
 		],
 
 		'layer7-protocol' => [
@@ -67,10 +65,8 @@ class resources
 			'dst-address' => '<th>DST_ADDR</th>',
 			'orig-bytes' => '<th>ORIG_BYTES</th>',
 			'orig-packets' => '<th>ORIG_PKTS</th>',
-			'reply-src-address' => '<th>REPLY_S_ADDR</th>',
-			'reply-dst-address' => '<th>REPLY_D_ADDR</th>',
 			'repl-bytes' => '<th>REPL_BYTES</th>',
-			'repl-packets' => '<th>REPL_PKTS</th>'
+                        'repl-packets' => '<th>REPL_PKTS</th>'
 		]
 	];
 
