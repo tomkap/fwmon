@@ -31,6 +31,8 @@ function refreshData() {
 			document.querySelector('tbody').innerHTML = data.tBody;
 		});
 	}
+
+	$('[data-toggle="popover"]').popover();
 }
 
 
