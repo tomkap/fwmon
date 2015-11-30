@@ -3,9 +3,16 @@ require_once('routeros_api.class.php');
 
 class fwmon
 {
-	public $info   = [];
-	public $rows   = '';
-	public $t_head = '';
+	public $info    = [];
+	public $rows    = '';
+	public $t_head  = '';
+	public $t_links = [
+		'nat' => '<a href="./?table=nat" class="btn btn-default">NAT</a>',
+		'filter' => '<a href="./?table=filter" class="btn btn-default">FILTER</a>',
+		'mangle' => '<a href="./?table=mangle" class="btn btn-default">MANGLE</a>',
+		'connection' => '<a href="./?table=connection" class="btn btn-default">CONN</a>',
+		'layer7-protocol' => '<a href="./?table=layer7-protocol" class="btn btn-default">L7-PROT</a>'
+	];
 
 	/* table name => [API call => HTML table header] */
 	private $struct = [
@@ -121,6 +128,8 @@ class fwmon
 		if (!array_key_exists($table, $this->struct)) {
 			$this->t_head = '<script>document.querySelector(\'table\').style.display = \'none\';</script>';
 		} else {
+			$this->t_links[$table] = str_replace('btn-default', 'btn-default active disabled', $this->t_links[$table]);
+
 			$this->t_head = '<tr>';
 			foreach ($this->struct[$table] as $call => $head) {
 				$this->t_head .= '<th>' . $head . '</th>';

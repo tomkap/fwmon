@@ -36,11 +36,10 @@ $fwmon = new fwmon($_GET['table']);
 				?>
 
 				<div class="btn-group btn-group-justified">
-					<a href="./?table=nat" class="btn btn-default">NAT</a>
-					<a href="./?table=filter" class="btn btn-default">FILTER</a>
-					<a href="./?table=mangle" class="btn btn-default">MANGLE</a>
-					<a href="./?table=connection" class="btn btn-default">CONN</a>
-					<a href="./?table=layer7-protocol" class="btn btn-default">L7-PROT</a>
+					<?php
+						foreach ($fwmon->t_links as $table => $link)
+							echo $link;
+					?>
 				</div>
 			</div>
 		</div>
