@@ -97,16 +97,18 @@ class resources
 		';
 
 		$mem_perc = round(($resources['free-memory']/$resources['total-memory']) * 100);
+		$f_mem    = $this->formatBytes($resources['free-memory']);
 		$this->info['free-memory']    = '
-				<b class="progress-header">Free memory (<font size="4em">' . $mem_perc . '%</font>, ' . $resources['free-memory'] . 'KB)</b>
+				<b class="progress-header">Free memory (<font size="4em">' . $mem_perc . '%</font>, ' . $f_mem . ')</b>
 				<div class="progress progress-striped">
 					<div class="progress-bar ' . $this->getProgressClass($mem_perc, true) . '" style="width: ' . $mem_perc . '%"></div>
 				</div>
 		';
 
 		$hdd_perc = round(($resources['free-hdd-space']/$resources['total-hdd-space']) * 100);
+		$f_hdd    = $this->formatBytes($resources['free-hdd-space']);
 		$this->info['free-hdd-space'] = '
-				<b class="progress-header">Free disk (<font size="4em">' . $hdd_perc . '%</font>, ' . $resources['free-hdd-space'] . 'KB)</b>
+				<b class="progress-header">Free disk (<font size="4em">' . $hdd_perc . '%</font>, ' . $f_hdd . ')</b>
 				<div class="progress progress-striped">
 					<div class="progress-bar ' . $this->getProgressClass($hdd_perc, true) . '" style="width: ' . $hdd_perc . '%"></div>
 				</div>
@@ -143,7 +145,7 @@ class resources
 	}
 
 
-	public function getProgressClass($percentage, $rev) {
+	private function getProgressClass($percentage, $rev) {
 		if ($rev) {
 			if ($percentage < 25) return 'progress-bar-danger';
 			if ($percentage < 50) return 'progress-bar-warning';
@@ -155,5 +157,18 @@ class resources
 		if ($percentage < 50) return 'progress-bar-success';
 		if ($percentage < 75) return 'progress-bar-warning';
 		return 'progress-bar-danger';
+	}
+
+
+	private function formatBytes($bytes, $precision = 2) { 
+	    $units = array('B', 'KB', 'MB', 'GB', 'TB'); 
+
+	    $bytes = max($bytes, 0); 
+	    $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
+	    $pow = min($pow, count($units) - 1); 
+
+	    $bytes /= (1 << (10 * $pow)); 
+
+	    return round($bytes, $precision) . ' ' . $units[$pow]; 
 	}
 }
