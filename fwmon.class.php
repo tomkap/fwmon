@@ -88,8 +88,8 @@ class fwmon
 
 
 	public function fwmon() {
-		$API = new routerosAPI();
-		$API->debug = false;
+		$this->API = new routerosAPI();
+		$this->API->debug = false;
 
 		$config = json_decode(file_get_contents('./config.json'), true);
 
@@ -126,7 +126,7 @@ class fwmon
 			}
 			$this->t_head .= '</tr>';
 
-			$results = $API->comm("/ip/firewall/$table/print");
+			$results = $this->API->comm("/ip/firewall/$table/print");
 
 			foreach($results as $result) {
 				if ($table === 'nat' || $table === 'filter' || $table === 'mangle') {
