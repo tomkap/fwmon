@@ -136,8 +136,12 @@ class fwmon
 					$this->t_rows .= '<tr>';
 				}
 
-				foreach ($this->struct[$table] as $call => $head)
-					$this->t_rows .= '<td>' . $result[$call] . '</td>';
+				foreach ($this->struct[$table] as $call => $head) {
+					if (array_key_exists($call, $result))
+						$this->t_rows .= '<td>' . $result[$call] . '</td>';
+					else
+						$this->t_rows .= '<td>-</td>';
+				}
 
 				$this->t_rows .= '</tr>';
 			}
