@@ -29,10 +29,10 @@ function refreshData() {
 		}).done(function (data) {
 			document.querySelector('thead').innerHTML = data.tHead;
 			document.querySelector('tbody').innerHTML = data.tBody;
+
+			$('[data-toggle="popover"]').popover();
 		});
 	}
-
-	$('[data-toggle="popover"]').popover();
 }
 
 
