@@ -1,7 +1,7 @@
 <?php
-require('resources.class.php');
+require_once('fwmon.class.php');
 
-$fwmon = new resources($_GET['table']);
+$fwmon = new fwmon($_GET['table']);
 
 ?><!DOCTYPE html><html>
 <head>
@@ -31,8 +31,8 @@ $fwmon = new resources($_GET['table']);
 				<?php
 					echo $fwmon->info['uptime'];
 					echo $fwmon->info['cpu-load'];
-					echo $fwmon->info['free-memory'];
-					echo $fwmon->info['free-hdd-space'];
+					echo $fwmon->info['memory-usage'];
+					echo $fwmon->info['hdd-usage'];
 				?>
 
 				<div class="btn-group btn-group-justified">
