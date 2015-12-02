@@ -37,7 +37,7 @@ class fwmon
 			'dst-port' => 'DST_PORT',
 			'to-addresses' => 'TO_ADDR',
 			'to-ports' => 'TO_PORTS',
-			'bytes' => 'BTS',
+			'bytes' => 'BYTES',
 			'packets' => 'PKTS'
 		],
 
@@ -52,7 +52,7 @@ class fwmon
 			'out-interface' => 'OUT_INT',
 			'src-port' => 'SRC_PORT',
 			'dst-port' => 'DST_PORT',
-			'bytes' => 'BTS',
+			'bytes' => 'BYTES',
 			'packets' => 'PKTS'
 		],
 
@@ -66,7 +66,7 @@ class fwmon
 			'in-interface' => 'IN_INT',
 			'out-interface' => 'OUT_INT',
 			'tcp-mss' => 'TCP_MSS',
-			'bytes' => 'BTS',
+			'bytes' => 'BYTES',
 			'packets' => 'PKTS',
 		],
 
@@ -79,10 +79,10 @@ class fwmon
 			'protocol' => 'PROTO',
 			'src-address' => 'SRC_ADDR',
 			'dst-address' => 'DST_ADDR',
-			'orig-bytes' => 'ORIG_BYTES',
-			'orig-packets' => 'ORIG_PKTS',
-			'repl-bytes' => 'REPL_BYTES',
-			'repl-packets' => 'REPL_PKTS'
+			'orig-bytes' => 'TX_BYTES',
+			'orig-packets' => 'TX_PKTS',
+			'repl-bytes' => 'RX_BYTES',
+			'repl-packets' => 'RX_PKTS'
 		]
 	];
 
