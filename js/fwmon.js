@@ -39,5 +39,5 @@ function refreshData() {
 
 $('[data-toggle="popover"]').popover();
 
-var interval = 20; // seconds
+var interval = 10; // seconds
 setInterval(refreshData, interval*1000);
